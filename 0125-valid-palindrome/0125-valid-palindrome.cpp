@@ -1,65 +1,53 @@
-class Solution {
+class Solution 
+{
+    private:
+    bool valid(char ch){
+        if((ch>='a' && ch<='z') || (ch>='A' && ch <= 'Z') || (ch >= '0' && ch <= '9')){
+            return 1;
+        }
+        return 0;
+    }
+    
+    char toLowerCase(char ch){
+        if((ch>='a' && ch <='z') || (ch>='0' && ch <= '9'))
+        {
+            return ch;
+        }
+        else{
+            char temp = ch -'A' + 'a';
+            return temp;
+        }
+    }
+    
+    bool checkPalindrome(string a){
+        int s =0;
+        int e = a.length()-1;
+        while(s<=e){
+            if(a[s] != a[e]){
+                return 0;
+            }
+            else{
+                s++;
+                e--;
+            }
+        
+        }    return 1;
+    }
+    
 public: 
     bool isPalindrome(string s) 
     {
-//         string temp = "";
-//         int len = s.length();
-//         for(int i=0;i<len;i++)
-//         {
-//             if((s[i]>='a'&& s[i]<='z') || (s[i]>='A' && s[i]<= 'Z') || (s[i]>=0 && s[i]<=9))
-//             {
-//                 temp.push_back(s[i]);
-//             }
-//         }
-        
-//         int len1 = temp.length();
-//         for(int i = 0;i<len1;i++){
-//             if(temp[i]>='A' && temp[i]<='Z'){
-//                 return (temp[i] - 'A' + 'a');
-//             }
-//             else{
-//                 return temp[i];
-//             }
-//         }
-        
-        
-//         int st = 0;
-//         int end = temp.length()-1;
-//         string temp1 = "";
-//         while(end>=0)
-//         {
-//             temp1.push_back(temp[end]);
-//             end--;
-            
-//         }
-        
-//         if(temp == temp1){
-//             return 1;
-//         }
-//         else{
-//             return 0;
-//         }
-        
         string temp = "";
-        int len = s.length();
-        for(int i = 0; i < len; i++) {
-            if(isalnum(s[i])) {
-                temp.push_back(tolower(s[i])); // Convert to lowercase
+        
+        for (int j=0;j<s.length(); j++){
+            if(valid(s[j])){
+                temp.push_back(s[j]);
             }
         }
         
-        int st = 0;
-        int end = temp.length() - 1;
-        string temp1 = "";
-        while(end >= 0) {
-            temp1.push_back(temp[end]);
-            end--;
+        for (int j=0;j<temp.length();j++){
+            temp[j]= toLowerCase(temp[j]);
         }
-        
-        if(temp == temp1) {
-            return true; // Return true for palindrome
-        } else {
-            return false; // Return false otherwise
-        }
-     }
+        return checkPalindrome(temp);
+    }
 };
