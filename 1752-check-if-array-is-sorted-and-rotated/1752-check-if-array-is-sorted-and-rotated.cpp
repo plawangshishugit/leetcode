@@ -1,19 +1,15 @@
 class Solution {
 public:
-    bool check(vector<int>& nums) 
-    {
-        int flag = 0;
-        int n = size(nums);
-        for(int i =0 ;i<n ;i++)
-        {
-            if(nums[i]>nums[(i+1)%n])
-            {
-                flag ++;
+    bool check(vector<int>& nums) {
+        int countDecreases = 0;
+        int n = nums.size();
+        
+        for (int i = 0; i < n; ++i) {
+            if (nums[i] > nums[(i + 1) % n]) {
+                countDecreases++;
             }
         }
-       
-            return flag <=1;
         
-        
+        return countDecreases <= 1;
     }
 };
