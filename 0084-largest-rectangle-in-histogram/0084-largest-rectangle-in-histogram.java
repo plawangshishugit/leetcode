@@ -8,21 +8,28 @@ class Solution {
 
         Stack<Integer> stack = new Stack<>();
         int maxArea = 0;
-        int n = heights.length;
+        int index = 0;
 
-        for (int i = 0; i <= n; i++) {
-            // If we reach the end, use a height of 0 to force all remaining bars to be processed
-            int h = (i == n) ? 0 : heights[i];
-
-            // Pop the stack and calculate area when the current height is smaller than the stack's top
-            while (!stack.isEmpty() && h < heights[stack.peek()]) {
-                int height = heights[stack.pop()];
-                int width = stack.isEmpty() ? i : i - stack.peek() - 1;
-                maxArea = Math.max(maxArea, height * width);
+        while (index < heights.length) {
+            // Push to stack if the current bar is taller than the bar at the top of the stack
+            if (stack.isEmpty() || heights[index] >= heights[stack.peek()]) {
+                stack.push(index);
+                index++;
+            } else {
+                // Calculate the area of the rectangle with the top of the stack as the smallest bar
+                int top = stack.pop();
+                int width = stack.isEmpty() ? index : index - stack.peek() - 1;
+                int area = heights[top] * width;
+                maxArea = Math.max(maxArea, area);
             }
+        }
 
-            // Push the current index to the stack
-            stack.push(i);
+        // Process the remaining bars in the stack
+        while (!stack.isEmpty()) {
+            int top = stack.pop();
+            int width = stack.isEmpty() ? index : heights.length - stack.peek() - 1;
+            int area = heights[top] * width;
+            maxArea = Math.max(maxArea, area);
         }
 
         return maxArea;
