@@ -2,40 +2,55 @@ class Solution {
 public:
     string pushDominoes(string dominoes) {
         int n = dominoes.size();
-        vector<int> forces(n, 0);
-        
-        
-        int force = 0;
+        vector<int> R_force(n, INT_MAX);
+        vector<int> L_force(n, INT_MAX);
+     
+        int current_force = 0;
         for (int i = 0; i < n; ++i) {
             if (dominoes[i] == 'R') {
-                force = n;          
+                current_force = 1;
+                R_force[i] = 0;
             } else if (dominoes[i] == 'L') {
-                force = 0;            
+                current_force = 0;
             } else {
-                force = max(force - 1, 0);
+                if (current_force > 0) {
+                    R_force[i] = current_force;
+                    current_force++;
+                }
             }
-            forces[i] += force;
         }
         
-
-        force = 0;
+     
+        current_force = 0;
         for (int i = n - 1; i >= 0; --i) {
             if (dominoes[i] == 'L') {
-                force = n;          
+                current_force = 1;
+                L_force[i] = 0;
             } else if (dominoes[i] == 'R') {
-                force = 0;           
+                current_force = 0;
             } else {
-                force = max(force - 1, 0);
+                if (current_force > 0) {
+                    L_force[i] = current_force;
+                    current_force++;
+                }
             }
-            forces[i] -= force;
-        }
-
-        for (int i = 0; i < n; ++i) {
-            if (forces[i] > 0)      dominoes[i] = 'R';
-            else if (forces[i] < 0) dominoes[i] = 'L';
-            else                    dominoes[i] = '.';
         }
         
-        return dominoes;
+   
+        string result;
+        for (int i = 0; i < n; ++i) {
+            if (dominoes[i] != '.') {
+                result.push_back(dominoes[i]);
+                continue;
+            }
+            if (R_force[i] < L_force[i]) {
+                result.push_back('R');
+            } else if (L_force[i] < R_force[i]) {
+                result.push_back('L');
+            } else {
+                result.push_back('.');
+            }
+        }
+        return result;
     }
 };
