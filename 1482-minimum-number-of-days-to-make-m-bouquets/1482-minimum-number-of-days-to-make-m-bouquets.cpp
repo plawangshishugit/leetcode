@@ -1,42 +1,39 @@
 class Solution {
 public:
-    bool canMakeBouquets(const vector<int>& bloomDay, int m, int k, int day) {
-        int bouquets = 0;
-        int flowers = 0;
-
-        for (int b : bloomDay) {
-            if (b <= day) {
-                flowers++;
-                if (flowers == k) {
-                    bouquets++;
-                    flowers = 0;
-                }
-            } else {
-                flowers = 0;
-            }
-        }
-
-        return bouquets >= m;
-    }
-
     int minDays(vector<int>& bloomDay, int m, int k) {
-        long long totalNeeded = (long long)m * k;
-        if (bloomDay.size() < totalNeeded) return -1;
+        int minimum = *min_element(bloomDay.begin(), bloomDay.end());
+        int maximum = *max_element(bloomDay.begin(), bloomDay.end());
+        int n = bloomDay.size();
 
-        int left = *min_element(bloomDay.begin(), bloomDay.end());
-        int right = *max_element(bloomDay.begin(), bloomDay.end());
-        int answer = -1;
+        if ((long long)m * k > n) return -1; // Not enough flowers
 
-        while (left <= right) {
-            int mid = left + (right - left) / 2;
-            if (canMakeBouquets(bloomDay, m, k, mid)) {
-                answer = mid;
-                right = mid - 1;
+        int s = minimum, e = maximum;
+        int ans = -1;
+
+        while (s <= e) {
+            int mid = s + (e - s) / 2;
+            int cflower = 0, cnt = 0;
+
+            for (int j = 0; j < n; j++) {
+                if (bloomDay[j] <= mid) {
+                    cflower++;
+                    if (cflower == k) {
+                        cnt++;
+                        cflower = 0;
+                    }
+                } else {
+                    cflower = 0;
+                }
+            }
+
+            if (cnt >= m) {
+                ans = mid;     // store current valid answer
+                e = mid - 1;   // try to minimize the day
             } else {
-                left = mid + 1;
+                s = mid + 1;
             }
         }
 
-        return answer;
+        return ans;
     }
 };
