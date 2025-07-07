@@ -19,12 +19,12 @@ public:
             while(i<n && events[i][0] == day)
             {
                 pq.push(events[i][1]);
-                i++;
+                i+=1;
             }
             if(!pq.empty())
             {
                 pq.pop();
-                count ++;
+                count += 1;
             }
             day += 1;
             while(!pq.empty() && pq.top() < day){
