@@ -18,9 +18,9 @@ public:
     //     delete temp;    
     //     }
     void deleteNode(ListNode* node) {
-    auto nextNode = node->next;
-    *node = *nextNode;
-    delete nextNode;
+    auto nN = node->next;
+    *node = *nN;
+    delete nN;
 }
 };
 
