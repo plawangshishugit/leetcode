@@ -6,15 +6,22 @@
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
+
+
+
 class Solution {
 public:
+    // void deleteNode(ListNode* node) {
+    //     ListNode *temp = node -> next;
+    //     node -> val = node -> next ->val;
+    //     node -> next = node -> next -> next;
+    //     delete temp;    
+    //     }
     void deleteNode(ListNode* node) {
-        ListNode *temp = node -> next;
-        node -> val = node -> next ->val;
-        node -> next = node -> next -> next;
-        delete temp;
-           
-        }
+    auto nextNode = node->next;
+    *node = *nextNode;
+    delete nextNode;
+}
 };
 
 //for this type of problem in which you dont have access to the head then 
