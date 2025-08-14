@@ -1,39 +1,25 @@
-#include <vector>
-#include <cmath>
-#include <algorithm>
-using namespace std;
-
-class Solution 
-{
-    // Use long long to safely accumulate large hour values
-    long long calculateHrs(vector<int>& piles, int banana)
-    {
-        long long hrs = 0;
-        for (int i = 0; i < piles.size(); i++)
-        {
-            // Ensure proper division and casting
-            hrs += (piles[i] + banana - 1LL) / banana; // avoids ceil
-        }
-        return hrs;
-    }    
-
+class Solution {
 public:
-    int minEatingSpeed(vector<int>& piles, int h) 
-    {
-        int left = 1;
-        int right = *max_element(piles.begin(), piles.end());
+    int minEatingSpeed(vector<int>& piles, int h) {
+        int low = 1;
+        int high = *max_element(piles.begin(), piles.end());
+        int ans = high;
 
-        while (left <= right)
-        {
-            int mid = left + (right - left) / 2;
-            long long hrs = calculateHrs(piles, mid);
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
 
-            if (hrs <= h)
-                right = mid - 1;
-            else
-                left = mid + 1;
+            long long hours = 0;
+            for (int p : piles) {
+                hours += (p + mid - 1) / mid; // same as ceil(p / mid)
+            }
+
+            if (hours <= h) {
+                ans = mid;
+                high = mid - 1; // try smaller k
+            } else {
+                low = mid + 1; // need to eat faster
+            }
         }
-
-        return left;
+        return ans;
     }
 };
