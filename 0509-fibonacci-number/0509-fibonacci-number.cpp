@@ -1,11 +1,15 @@
 class Solution {
 public:
+    vector<int>dp;
     int fib(int n) {
+        dp.assign(n+1, -1);
         if(n <= 1){
             return n;
         }
-
-        return fib(n-1) + fib(n-2);
+        if(dp[n] != -1){
+            return dp[n];
+        }
+        return dp[n] = fib(n-1) + fib(n-2);
         
     }
 };
