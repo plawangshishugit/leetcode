@@ -1,62 +1,67 @@
+#include <bits/stdc++.h>
+using namespace std;
+
 class Solution {
 public:
+    // Function to set entire row and column to 0 if an element in the matrix is 0 (Optimal O(1) space)
     void setZeroes(vector<vector<int>>& matrix) {
-        
-    int rows = matrix.size();
-    if (rows == 0) return;
-    int cols = matrix[0].size();
-    
-    bool firstRowHasZero = false;
-    bool firstColHasZero = false;
-    
-    // Check if first row has zero
-    for (int j = 0; j < cols; ++j) {
-        if (matrix[0][j] == 0) {
-            firstRowHasZero = true;
-            break;
+        // Get dimensions of matrix
+        int m = matrix.size();
+        int n = matrix[0].size();
+
+        // Flag to track if first row should be zeroed
+        bool firstRowZero = false;
+        // Flag to track if first column should be zeroed
+        bool firstColZero = false;
+
+        // Check if first row has any zero
+        for (int j = 0; j < n; j++) {
+            if (matrix[0][j] == 0) {
+                firstRowZero = true;
+                break;
+            }
         }
-    }
-    
-    // Check if first column has zero
-    for (int i = 0; i < rows; ++i) {
-        if (matrix[i][0] == 0) {
-            firstColHasZero = true;
-            break;
+
+        // Check if first column has any zero
+        for (int i = 0; i < m; i++) {
+            if (matrix[i][0] == 0) {
+                firstColZero = true;
+                break;
+            }
         }
-    }
-    
-    // Use first row and column to mark zeros
-    for (int i = 1; i < rows; ++i) {
-        for (int j = 1; j < cols; ++j) {
-            if (matrix[i][j] == 0) {
-                matrix[i][0] = 0;
+
+        // Mark rows and columns in first row/column
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                if (matrix[i][j] == 0) {
+                    matrix[i][0] = 0;
+                    matrix[0][j] = 0;
+                }
+            }
+        }
+
+        // Set matrix cells to zero based on markers
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                if (matrix[i][0] == 0 || matrix[0][j] == 0) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+
+        // Handle first row
+        if (firstRowZero) {
+            for (int j = 0; j < n; j++) {
                 matrix[0][j] = 0;
             }
         }
-    }
-    
-    // Set zeros based on marks
-    for (int i = 1; i < rows; ++i) {
-        for (int j = 1; j < cols; ++j) {
-            if (matrix[i][0] == 0 || matrix[0][j] == 0) {
-                matrix[i][j] = 0;
+
+        // Handle first column
+        if (firstColZero) {
+            for (int i = 0; i < m; i++) {
+                matrix[i][0] = 0;
             }
         }
     }
-    
-    // Set zeros for first row if needed
-    if (firstRowHasZero) {
-        for (int j = 0; j < cols; ++j) {
-            matrix[0][j] = 0;
-        }
-    }
-    
-    // Set zeros for first column if needed
-    if (firstColHasZero) {
-        for (int i = 0; i < rows; ++i) {
-            matrix[i][0] = 0;
-        }
-    }
-        
-    }
 };
+
