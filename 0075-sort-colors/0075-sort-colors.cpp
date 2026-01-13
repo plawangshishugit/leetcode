@@ -13,7 +13,7 @@ public:
                 mid += 1;
             }
 
-            if(nums[mid] == 1){
+            else if(nums[mid] == 1){
                 mid += 1;
             }
         }
