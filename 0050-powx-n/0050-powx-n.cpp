@@ -1,6 +1,5 @@
 class Solution {
 public:
-
     double power(double x, long n){
         if(n == 0)return 1.0;
         if(n==1) return x;
