@@ -2,20 +2,19 @@ class Solution {
 public:
     int majorityElement(vector<int>& nums) {
         int cnt = 0;
-        int ele;
-        for(int i = 0; i< nums.size() ; i++)
-        {
+        int maxptr = 0;
+        for(int i = 0; i<nums.size() ; i++){
             if(cnt == 0){
-                ele = nums[i];
-                cnt += 1;
+                maxptr = i;
             }
-            else if( nums[i] == ele){
-                cnt += 1;
-            }
-            else{
+            if(nums[i] != nums[maxptr]){
                 cnt -= 1;
             }
+            else if( nums [i] == nums[maxptr]){
+                cnt += 1;
+            }
+            
         }
-        return ele;
+        return nums[maxptr];
     }
 };
