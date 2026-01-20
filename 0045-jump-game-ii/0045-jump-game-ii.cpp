@@ -1,19 +1,14 @@
 class Solution {
 public:
     int jump(vector<int>& nums) {
-        int jumps = 0;
-        int currEnd = 0;
-        int farthest = 0;
-
-        for (int i = 0; i < nums.size() - 1; i++) {
-            farthest = max(farthest, i + nums[i]);
-
-            // when we reach the end of current jump range
-            if (i == currEnd) {
-                jumps++;
-                currEnd = farthest;
+        int jump =0, currIndex = 0, farthest = 0;
+        for(int i =0; i<nums.size()-1; i++){
+            farthest = max(farthest, nums[i] + i);
+            if( i == currIndex){
+                jump += 1;
+                currIndex = farthest;
             }
         }
-        return jumps;
+        return jump;
     }
 };
