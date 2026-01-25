@@ -7,11 +7,8 @@ public:
         }
         sort(nums.begin(), nums.end());
         int mindiff = INT_MAX;
-        for(int i = 0; i<n-1; i++){
-            int diff = abs(nums[i] - nums[i+1]);
-            if(diff<mindiff){
-                mindiff = diff;
-            }
+        for(int i = 0; i+k-1<n; i++){
+            mindiff = min(mindiff, nums[i + k - 1] - nums[i]);
         }
         return mindiff;
     }
