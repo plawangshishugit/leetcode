@@ -1,35 +1,24 @@
 class Solution {
 public:
     string reverseWords(string s) {
-        vector<string> words;
-        string current;
-        
-        for (char c : s) {
-            if (c != ' ') {
-                current += c;
-            } else {
-                if (!current.empty()) {
-                    words.push_back(current);
-                    current.clear();
-                }
-            }
+        int i = s.size() - 1;
+        string ans = "";
+
+        while (i >= 0) {
+            // skip spaces
+            while (i >= 0 && s[i] == ' ') i--;
+
+            if (i < 0) break;
+
+            int j = i;
+            // find word start
+            while (j >= 0 && s[j] != ' ') j--;
+
+            if (!ans.empty()) ans += " ";
+            ans += s.substr(j + 1, i - j);
+
+            i = j - 1;
         }
-        
-        // Add the last word if there's any
-        if (!current.empty()) {
-            words.push_back(current);
-        }
-        
-        reverse(words.begin(), words.end());
-        
-        string result;
-        for (int i = 0; i < words.size(); ++i) {
-            if (i != 0) {
-                result += " ";
-            }
-            result += words[i];
-        }
-        
-        return result;
+        return ans;
     }
 };
