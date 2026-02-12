@@ -1,27 +1,26 @@
-#include <cmath>
-
 class Solution {
 public:
+    const long long MOD = 1e9 + 7;
+
+    long long intPow(long long x, long long n) {
+        long long result = 1;
+        x %= MOD;  // Handle large base
+        while (n > 0) {
+            if (n % 2 == 1)
+                result = (result * x) % MOD;
+            x = (x * x) % MOD;
+            n /= 2;
+        }
+        return result;
+    }
+
     int countGoodNumbers(long long n) {
-        long long even_pos = (n + 1) / 2;
-        long long odd_pos = n / 2;
-        long long mod = 1e9 + 7;
-        
-        auto power = [mod](long long base, long long exp) {
-            long long result = 1;
-            while (exp > 0) {
-                if (exp % 2 == 1) {
-                    result = (result * base) % mod;
-                }
-                base = (base * base) % mod;
-                exp /= 2;
-            }
-            return result;
-        };
-        
-        long long even_choices = power(5, even_pos);
-        long long odd_choices = power(4, odd_pos);
-        
-        return (even_choices * odd_choices) % mod;
+        long long evenPositions = (n + 1) / 2;
+        long long oddPositions = n / 2;
+
+        long long evenWays = intPow(5, evenPositions);
+        long long oddWays = intPow(4, oddPositions);
+
+        return (evenWays * oddWays) % MOD;
     }
 };
