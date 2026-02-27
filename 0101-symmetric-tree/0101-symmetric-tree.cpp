@@ -11,39 +11,16 @@
  */
 class Solution {
 public:
+    bool isSymmetricHelp(TreeNode* left, TreeNode* right){
+        if(left == nullptr || right == nullptr){
+            return left == right;
+        }
+        if(left -> val != right -> val) return false;
 
-    bool checkMirror(TreeNode *node1, TreeNode *root2){
-        if(node1 ==NULL && root2 ==NULL)
-        {
-            return true;
-        }
-        if(node1 !=NULL && root2 ==NULL)
-        {
-            return false;
-        }
-        if(node1 ==NULL && root2 !=NULL)
-        {
-            return false;
-        }
-        if(node1 -> val != root2 -> val)
-        {
-            return false;
-        }
-
-        bool option1 = checkMirror(node1 -> left, root2 -> right);
-        bool option2 = checkMirror(node1 -> right , root2 -> left);
-        bool finalAns = option1 && option2;
-
-        return finalAns;
+        return isSymmetricHelp(left -> left, right -> right) && isSymmetricHelp(left->right, right->left);
     }
-
     bool isSymmetric(TreeNode* root) {
-        if(root == NULL){
-            return true;
-        }
-
-        return    checkMirror(root -> left, root -> right);
-    
-        
+        return root == nullptr || isSymmetricHelp(root -> left, root -> right);
     }
+
 };
